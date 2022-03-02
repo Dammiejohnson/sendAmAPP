@@ -6,6 +6,12 @@ public class User {
     private String phoneNumber;
     private String address;
 
+    public User(String email) {
+        this.email = email;
+    }
+
+    public User(){}
+
     public String getEmail() {
         return email;
     }
@@ -36,5 +42,16 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("User{");
+        sb.append("email='").append(email).append('\'');
+        sb.append(", fullname='").append(fullname).append('\'');
+        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
+        sb.append(", address='").append(address).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }
