@@ -4,8 +4,10 @@ import africa.semicolon.sendAm.data.models.User;
 import africa.semicolon.sendAm.data.repositories.UserRepository;
 import africa.semicolon.sendAm.data.repositories.UserRepositoryImpl;
 import africa.semicolon.sendAm.dtos.requests.RegisterUserRequest;
+import africa.semicolon.sendAm.dtos.responses.FindUserResponse;
 import africa.semicolon.sendAm.dtos.responses.RegisterUserResponse;
 import africa.semicolon.sendAm.exceptions.RegisterFailureException;
+import africa.semicolon.sendAm.exceptions.UserNotFoundException;
 
 public class UserServiceImpl  implements  UserService{
     private UserRepository userRepository = new UserRepositoryImpl();
@@ -37,5 +39,17 @@ public class UserServiceImpl  implements  UserService{
     @Override
     public UserRepository getRepository() {
         return userRepository;
+    }
+
+    @Override
+    public FindUserResponse findUserByEmail(String email) {
+       email = email.toLowerCase();
+        User user = userRepository.findByEmail(email);
+        //create response
+        if (user == null) throw new UserNotFoundException(email + " not found");
+        FindUserResponse response = new FindUserResponse();
+        response.setEmail(user.getEmail());
+        response.setFullName(user.getFullname());
+            return response;
     }
 }

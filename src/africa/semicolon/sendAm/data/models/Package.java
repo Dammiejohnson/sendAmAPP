@@ -5,6 +5,16 @@ import java.util.List;
 
 public class Package {
     private int id;
+    private int qty;
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
+
     private User owner;
     private PackageDescription description;
     private final List<Status> statusList = new ArrayList<>();

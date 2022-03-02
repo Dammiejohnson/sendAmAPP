@@ -1,8 +1,10 @@
 package africa.semicolon.sendAm.services;
 
 import africa.semicolon.sendAm.dtos.requests.RegisterUserRequest;
+import africa.semicolon.sendAm.dtos.responses.FindUserResponse;
 import africa.semicolon.sendAm.dtos.responses.RegisterUserResponse;
 import africa.semicolon.sendAm.exceptions.SendAmAppException;
+import africa.semicolon.sendAm.exceptions.UserNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -73,9 +75,28 @@ class UserServiceImplTest {
         RegisterUserRequest lotaform = createRegisterForm();
         userservice.register(lotaform);
 
-        FindUserResponse result = userservice.findUserByEmail(lotaform.getEmailAddress().toLowerCase());
-
+        FindUserResponse response = userservice.findUserByEmail(lotaform.getEmailAddress().toLowerCase());
         //assertEquals(result)
+        assertEquals("Lotachi Senior Dave", response.getFullName());
+        assertEquals("seniordavedevil@gmail.com", response.getEmail());
     }
 
+    @Test
+    public void findUnRegisteredUserByEmail_throwsExceptionTest (){
+        RegisterUserRequest lotaform = createRegisterForm();
+        userservice.register(lotaform);
+
+     assertThrows(UserNotFoundException.class, ()-> userservice.findUserByEmail("emma@gmail.com") );
+    }
+
+    @Test
+    public void findUserEmailIsNotCaseSensitiveTest(){
+        RegisterUserRequest lotaform = createRegisterForm();
+        userservice.register(lotaform);
+
+        FindUserResponse response = userservice.findUserByEmail("seNiorDaVedevil@gmail.com");
+
+        assertEquals("Lotachi Senior Dave", response.getFullName());
+        assertEquals("seniordavedevil@gmail.com", response.getEmail());
+    }
 }
