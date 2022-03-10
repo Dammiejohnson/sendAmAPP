@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class Status {
     private final LocalDateTime dateTime = LocalDateTime.now();
+    private String status;
 
     public LocalDateTime getDateTime() {
         return dateTime;
@@ -17,7 +18,12 @@ public class Status {
         this.status = status;
     }
 
-    private String status;
-
-
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Status{");
+        sb.append("dateTime=").append(dateTime);
+        sb.append(", status='").append(status).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

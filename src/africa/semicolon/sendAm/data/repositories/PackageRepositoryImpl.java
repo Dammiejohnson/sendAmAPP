@@ -11,12 +11,22 @@ public class PackageRepositoryImpl implements PackageRepository {
 
     @Override
     public Package save(Package aPackage) {
-        int id = generateId();
-        aPackage.setId(id);
-        db.add(aPackage);
+        if(aPackage.getId() == 0) saveNew(aPackage);
+        else update(aPackage);
         return aPackage;
         //note that return aPackage; is the same with return db.get(--id); but this is way safer
         // even though the former is faster or rather return.findBy(id)
+    }
+
+    private void saveNew(Package aPackage) {
+        int id = generateId();
+        aPackage.setId(id);
+        db.add(aPackage);
+    }
+
+    private void update (Package aPackage){
+        delete(aPackage.getId());
+        db.add(aPackage);
     }
 
     private int generateId() {

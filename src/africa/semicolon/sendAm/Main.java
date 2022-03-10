@@ -1,5 +1,6 @@
 package africa.semicolon.sendAm;
 
+import africa.semicolon.sendAm.controllers.PackageController;
 import africa.semicolon.sendAm.controllers.UserController;
 import africa.semicolon.sendAm.dtos.requests.RegisterUserRequest;
 import africa.semicolon.sendAm.dtos.responses.FindUserResponse;
@@ -12,6 +13,7 @@ import java.util.Scanner;
 @SpringBootApplication
 public class Main {
     private static UserController userController = new UserController();
+    private static PackageController packageController = new PackageController();
     public static void main(String[] args) {
         //loads options
       //  loadOptions();
